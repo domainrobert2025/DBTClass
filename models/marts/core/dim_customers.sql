@@ -5,9 +5,9 @@
 }}
 
 with customers as (
-      select * from {{ref('stg_customers')}}
+      select * from {{source('jaffle_shop','customers')}}
 ), orders as (
-     select * from {{ref('stg_orders')}}
+     select * from {{ ref('fct_orders') }}
 ),
 
 Customer_orders as (
@@ -15,7 +15,8 @@ Customer_orders as (
         customer_id,
         min(order_date) as first_order_date,
         max(order_date) as most_recent_order_date,
-        count(order_id) as number_of_orders
+        count(order_id) as number_of_orders,
+        sum(amount) as lifetime_value
     From orders
     Group by 1
 ),
@@ -26,7 +27,8 @@ Final as (
        customers.last_name,
        customer_orders.first_order_date,
        customer_orders.most_recent_order_date,
-       coalesce(customer_orders.number_of_orders,0) as number_of_orders
+       coalesce(customer_orders.number_of_orders,0) as number_of_orders,
+       lifetime_value   
     From Customers
     Left join customer_orders using (customer_id)   
 )
