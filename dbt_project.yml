@@ -9,5 +9,3 @@ models:
     marts:
       core:
         +materialized: table
-
-# Optional sections (top-level, not nested under dbtclass)

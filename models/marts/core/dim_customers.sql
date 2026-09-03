@@ -7,16 +7,16 @@
 with customers as (
       select * from {{source('jaffle_shop','customers')}}
 ), orders as (
-     select * from {{ source('jaffle_shop','orders') }}
+     select * from {{ ref('fct_orders') }}
 ),
 
 customer_orders as (
     select
-        customer_id,
+        id as customer_id,
         min(order_date) as first_order_date,
         max(order_date) as most_recent_order_date,
         count(id) as number_of_orders,
-        sum(total_amount) as lifetime_value
+        sum(amount) as lifetime_value
     from orders
     group by 1
 ),
