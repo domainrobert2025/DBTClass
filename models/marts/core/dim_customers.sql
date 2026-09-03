@@ -8,8 +8,6 @@ with customers as (
       select * from {{source('jaffle_shop','customers')}}
 ), orders as (
      select * from {{ source('jaffle_shop','orders') }}
-), payments as (
-    select * from {{ source('stripe', 'payment') }}
 ),
 
 customer_orders as (
@@ -32,6 +30,6 @@ final as (
        coalesce(customer_orders.number_of_orders,0) as number_of_orders,
        customers_orders.lifetime_value
     from Customers
-    feft join customer_orders using (customer_id)   
+    left join customer_orders using (customer_id)   
 )
 select * from final
