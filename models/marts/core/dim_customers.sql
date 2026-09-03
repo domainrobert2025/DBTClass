@@ -9,7 +9,7 @@ with customers as (
 ), orders as (
      select * from {{ source('jaffle_shop','orders') }}
 ), payments as (
-    select * from {{ source('stripe', 'payments') }}
+    select * from {{ source('stripe', 'payment') }}
 ),
 
 customer_orders as (
