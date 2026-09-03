@@ -2,7 +2,6 @@ name: 'dbtclass'
 version: '1.0.0'
 config-version: 2
 
-# Define model materializations by folder
 models:
   dbtclass:
     staging:
@@ -11,12 +10,4 @@ models:
       core:
         +materialized: table
 
-# Optional: specify seeds, snapshots, and tests if you use them
-seeds:
-  +schema: seeds
-
-snapshots:
-  +target_schema: snapshots
-
-tests:
-  +severity: warn
+# Optional sections (top-level, not nested under dbtclass)
