@@ -6,6 +6,8 @@ with payments as (
        status,
        amount,
        created as created_at,
-    from raw.stripe.payment
+    -- Replace 'from raw.stripe.payment' with:
+       from {{ source('stripe', 'payment') }}
+
 )
 select * from payments
